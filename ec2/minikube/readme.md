@@ -1,27 +1,5 @@
 # Create EC2 instance for the minikube
 
-IMPORTANT!!!
-
-Be on the right AWS account! Check the result of the following command
-```
-aws configure list
-```
-
-## Create/use a Key Pair
-Create a Key Pair to be able to access the EC2 instance later.
-
-On the  AWS console create a new Key Pair and put the auto-downloaded file where you won't loose it.
-
-Chmod the the permission of the `pem` file
-```
-chmod 400 <NAME_OF_THE_KEY_FILE>.pem 
-```
-
-Check for existing one
-```
-aws ec2 describe-key-pairs
-```
-
 ## Security group
 Create Security group for the EC2 instance
 ```
@@ -48,10 +26,10 @@ Create an EC2 instance with the required characteristics to be able to run Minik
 * type: t2.medium
 
 ```
-aws ec2 run-instances --image-id ami-0b1deee75235aa4bb --instance-type t2.medium --key-name <AWS_KEY_PAIR_NAME_PEM_FILE> --security-group-ids <PREVIOUSLY_CREATED_GROUP_ID> --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Minikube}]'
+aws ec2 run-instances --image-id ami-0b1deee75235aa4bb --instance-type t2.medium --key-name <AWS_KEY_PAIR_NAME_PEM_FILE> --security-groups <PREVIOUSLY_CREATED_GROUP_NAME> --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Minikube}]'
 ```
 ```
-aws ec2 run-instances --image-id ami-0b1deee75235aa4bb --instance-type t2.medium --key-name zsapkagy-ec2-key --security-group-ids sg-032b8b299d0e34e9d --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Minikube}]'
+aws ec2 run-instances --image-id ami-0b1deee75235aa4bb --instance-type t2.medium --key-name zsapkagy-ec2-key --security-groups Minikube --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Minikube}]'
 ```
 
 Get the just created EC2 instance id 
