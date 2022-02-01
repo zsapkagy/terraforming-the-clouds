@@ -1,0 +1,81 @@
+ #cloud-config
+
+package_upgrade: true
+package_update: true
+# Downloads the additional package
+packages:
+ - tmux
+ - docker
+ - git
+
+
+# add each entry to ~/.ssh/authorized_keys for the configured user or the
+# first user defined in the user definition directive.
+# ssh_authorized_keys:
+#   - ${GIT_PUB_KEY}
+
+# Send pre-generated SSH private keys to the server
+# If these are present, they will be written to /etc/ssh and
+# new random keys will not be generated
+#  in addition to 'rsa' and 'dsa' as shown below, 'ecdsa' is also supported
+# ssh_keys:
+#   rsa_private: |
+#     ${GIT_PRIVATE_KEY}
+#     -----BEGIN RSA PRIVATE KEY-----
+#     MIIBxwIBAAJhAKD0YSHy73nUgysO13XsJmd4fHiFyQ+00R7VVu2iV9Qcon2LZS/x
+#     1cydPZ4pQpfjEha6WxZ6o8ci/Ea/w0n+0HGPwaxlEG2Z9inNtj3pgFrYcRztfECb
+#     1j6HCibZbAzYtwIBIwJgO8h72WjcmvcpZ8OvHSvTwAguO2TkR6mPgHsgSaKy6GJo
+#     PUJnaZRWuba/HX0KGyhz19nPzLpzG5f0fYahlMJAyc13FV7K6kMBPXTRR6FxgHEg
+#     L0MPC7cdqAwOVNcPY6A7AjEA1bNaIjOzFN2sfZX0j7OMhQuc4zP7r80zaGc5oy6W
+#     p58hRAncFKEvnEq2CeL3vtuZAjEAwNBHpbNsBYTRPCHM7rZuG/iBtwp8Rxhc9I5w
+#     ixvzMgi+HpGLWzUIBS+P/XhekIjPAjA285rVmEP+DR255Ls65QbgYhJmTzIXQ2T9
+#     luLvcmFBC6l35Uc4gTgg4ALsmXLn71MCMGMpSWspEvuGInayTCL+vEjmNBT+FAdO
+#     W7D4zCpI43jRS9U06JVOeSc9CDk2lwiA3wIwCTB/6uc8Cq85D9YqpM10FuHjKpnP
+#     REPPOyrAspdeOAV+6VKRavstea7+2DZmSUgE
+#     -----END RSA PRIVATE KEY-----
+
+  # rsa_public: ${GIT_PUB_KEY}
+# By default, the fingerprints of the authorized keys for the users
+# cloud-init adds are printed to the console. Setting
+# no_ssh_fingerprints to true suppresses this output.
+no_ssh_fingerprints: false
+# By default, (most) ssh host keys are printed to the console. Setting
+# emit_keys_to_console to false suppresses this output.
+ssh:
+  emit_keys_to_console: false
+
+# runcmd:
+#  - [aws, configure, set, aws_access_key_id, "${AWS_CLI_access_key}"]
+#  - [aws, configure, set, aws_secret_access_key, "${AWS_CLI_secret_key}"]
+#  - [aws, configure, set, default.region, "${AWS_CLI_region}"]
+
+write_files:
+# The write-files module is configured to run before the users-groups modules so
+# we place these files in /etc/skel instead of putting them directly into
+# /home/ec2-user.
+# - path: /etc/skel/.tmux.conf
+#   content: "${filebase64("${root}/tmux.conf")}"
+#   owner: root:root
+#   permissions: '0644'
+#   encoding: b64
+
+# bash profile
+# - path: /etc/skel/.bash_profile
+#   content: "${filebase64("${root}/bash_profile")}"
+#   owner: root:root
+#   permissions: '0644'
+#   encoding: b64
+
+# Go version manager (https://github.com/c2nes/gv)
+# - path: /etc/skel/bin/gv
+#   content: "${filebase64("${root}/gv")}"
+#   owner: root:root
+#   permissions: '0755'
+#   encoding: b64
+
+# ec2-user init script
+- path: /etc/skel/bin/user.init.sh
+  content: "${filebase64("${root}/init/user-init.sh")}"
+  owner: root:root
+  permissions: '0755'
+  encoding: b64

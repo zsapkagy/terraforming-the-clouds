@@ -1,0 +1,32 @@
+ #cloud-config
+
+package_upgrade: true
+package_update: true
+# Downloads the additional package
+packages:
+ - tmux
+ - docker
+ - git
+ - node
+
+no_ssh_fingerprints: false
+# By default, (most) ssh host keys are printed to the console. Setting
+# emit_keys_to_console to false suppresses this output.
+ssh:
+  emit_keys_to_console: false
+
+# runcmd:
+#  - [aws, configure, set, aws_access_key_id, "${AWS_CLI_access_key}"]
+#  - [aws, configure, set, aws_secret_access_key, "${AWS_CLI_secret_key}"]
+#  - [aws, configure, set, default.region, "${AWS_CLI_region}"]
+
+write_files:
+# The write-files module is configured to run before the users-groups modules so
+# we place these files in /etc/skel instead of putting them directly into
+# /home/ec2-user.
+# ec2-user init script
+- path: /etc/skel/bin/user.init.sh
+  content: "${filebase64("${root}/init/user-init.sh")}"
+  owner: root:root
+  permissions: '0755'
+  encoding: b64
