@@ -29,11 +29,19 @@ variable "instance_name" {
 variable "user" {
   description = "The SSH user"
   type        = string
-  sensitive   = true
 }
 
 variable "ssh_publickey_path" {
   description = "The absolute path of the ssh public key that will be used to connect the instance"
   type        = string
-  sensitive   = true
+}
+
+variable "git_user_name" {
+  description = "User name to the git config"
+  type        = string
+}
+
+variable "git_user_email" {
+  description = "User email to the git config"
+  type        = string
 }

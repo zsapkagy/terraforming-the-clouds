@@ -16,7 +16,7 @@ resource "google_compute_instance" "default" {
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-10"
+      image = "ubuntu-os-cloud/ubuntu-2004-lts"
     }
   }
 
@@ -36,10 +36,11 @@ resource "google_compute_instance" "default" {
   }
 
   metadata = {
-    ssh-keys = "${var.user}:${file(var.ssh_publickey_path)}"
+    ssh-keys  = "${var.user}:${file(var.ssh_publickey_path)}"
+    user-data = data.template_file.instance_startup_script.rendered
   }
 
-  metadata_startup_script = "echo hi > /test.txt"
+  metadata_startup_script = "/etc/skel/init/init.sh"
 
   service_account {
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
@@ -48,4 +49,6 @@ resource "google_compute_instance" "default" {
   }
 
   allow_stopping_for_update = true
+
+  # depends_on = [data.template_file.instance_startup_script]
 }

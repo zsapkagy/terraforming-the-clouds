@@ -26,6 +26,7 @@ for more details see [link](https://registry.terraform.io/providers/hashicorp/go
 * Run `terraform plan` to check the previous configurations
 
 ### Create an SSH key pair
+
 If you don't already have an `ssh` key to use with this instance create a new one
 * [Create an SSH key pair](https://cloud.google.com/compute/docs/connect/create-ssh-keys)
 * Set the path of the public key as `tfvar`
@@ -35,3 +36,4 @@ Usefull tutorials, docs
 
 * [Getting Started with the Google Provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/getting_started#configuring-the-provider)
 * [GCP with terraform tutorial](https://cloud.google.com/community/tutorials/getting-started-on-gcp-with-terraform)
+* [Protect Sensitive Input Variables](https://learn.hashicorp.com/tutorials/terraform/sensitive-variables)

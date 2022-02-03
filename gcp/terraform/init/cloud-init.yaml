@@ -1,0 +1,60 @@
+ #cloud-config
+
+package_upgrade: true
+package_update: true
+# Downloads the additional package
+packages:
+ - tmux
+ - git
+ - docker.io
+#  - node
+#  - kubectl
+
+no_ssh_fingerprints: false
+# By default, (most) ssh host keys are printed to the console. Setting
+# emit_keys_to_console to false suppresses this output.
+ssh:
+  emit_keys_to_console: false
+
+  # create the docker group
+groups:
+  - docker
+
+# Add default auto created user to docker group
+# system_info:
+#   zsapkagy_user:
+#     groups: [docker]
+
+runcmd:
+  # - curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+  # - printf '\nexport NVM_DIR="/opt/nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"\n' >> /etc/bash.bashrc
+
+  # install nvm
+  - mkdir -p /opt/nvm
+  - curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | NVM_DIR=/opt/nvm bash
+  - printf '\nexport NVM_DIR="/opt/nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"\n' >> /etc/bash.bashrc
+
+  # install docker following the guide: https://docs.docker.com/install/linux/docker-ce/ubuntu/
+  # - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  # - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  # - sudo apt-get -y update
+  # - sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+  # - sudo systemctl enable docker
+  # - sudo usermod -a -G docker zsapkagy
+
+write_files:
+# The write-files module is configured to run before the users-groups modules so
+# we place these files in /etc/skel instead of putting them directly into
+# /home/foo-user.
+# root-user init script
+- path: /etc/skel/init/init.sh
+  content: ${base64encode("${init_script}")}
+  owner: root:root
+  permissions: '0755'
+  encoding: b64
+# foo-user init script
+- path: /etc/skel/init/user-init.sh
+  content: ${base64encode("${user_init_script}")}
+  owner: root:root
+  permissions: '0755'
+  encoding: b64
