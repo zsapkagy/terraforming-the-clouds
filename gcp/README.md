@@ -1,6 +1,11 @@
 # Goggle cloud Compute instances
 Init scripts and info how to acces the instances
 
+# IMPORTANT
+
+Be on the right GCP account!
+DO NOT CREATE instances on a WRONG account!
+
 ## Before you begin
 
 ### Set up GCP

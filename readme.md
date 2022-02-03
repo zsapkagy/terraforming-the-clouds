@@ -1,16 +1,7 @@
-# aws
-AWS scripts and tricks
+# Terraforming the clouds
 
-# IMPORTANT
-
-Be on the right AWS account!
-DO NOT CREATE instances on a WRONG account!
-
-Check the result of the following command
-```
-aws configure list
-```
+This repo contains some WorkInProgress code and scripts that could help create resources in the various cloud providers
 
 # Content
-* [EC2 instances](./ec2/readme.md)
-
+* [AWS](./aws/readme.md)
+* [GOOGLE - GCP](./gcp/readme.md)
