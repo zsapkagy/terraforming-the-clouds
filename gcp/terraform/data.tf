@@ -14,6 +14,7 @@ data "template_file" "instance_startup_script" {
       git_user_name  = var.git_user_name
       git_user_email = var.git_user_email
     })
+    github_ssh_key = file(var.ssh_github_privatekey_path)
   }
 }
 

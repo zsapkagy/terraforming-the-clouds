@@ -5,17 +5,25 @@
 set -euo pipefail
 
 cd "$HOME"
+UPLOADED_GITHUB_SSH_KEY=~/init/github_ssh_key
+GITHUB_SSH_KEY=~/.ssh/github_ssh_key
 
 # GIT
-# check connection
-ssh -T git@github.com -y
-# nem lehet tul nagy joga a git keyeknek
-# chmod 0600 id_ed25519*
-
-# ADD SSH KEY TO THE TRUS
-# Add your SSH private key to the ssh-agent TO revent the passhprease question
-# eval "$(ssh-agent -s)"
-# ssh-add ~/.ssh/id_ed25519
-
 git config --global user.email "${git_user_email}"
 git config --global user.name "${git_user_name}"
+
+# Relocate the ssh key
+mv $UPLOADED_GITHUB_SSH_KEY ~/.ssh
+# Set the correct permissions to the key file
+chmod 0600 $GITHUB_SSH_KEY
+# Add your SSH private key to the ssh-agent
+eval "$(ssh-agent -s)"
+ssh-add $GITHUB_SSH_KEY
+
+# Create an ssh config file to auto-load the github keys to the ssh-agent
+printf "Host *
+  AddKeysToAgent yes
+  IdentityFile $GITHUB_SSH_KEY
+" >> ~/.ssh/config
+
+echo "try executing 'ssh -T git@github.com' to check github permission"

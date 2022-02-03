@@ -1,13 +1,13 @@
 variable "region" {
   description = "The GCP region to create and test resources in"
   type        = string
-  default     = "europe-west6-a"
+  default     = "europe-west1"
 }
 
 variable "zone" {
   description = "The GCP zone to create and test resources in"
   type        = string
-  default     = "europe-west6-a"
+  default     = "europe-west1-b"
 }
 
 variable "project_id" {
@@ -36,6 +36,11 @@ variable "ssh_publickey_path" {
   type        = string
 }
 
+variable "ssh_github_privatekey_path" {
+  description = "The absolute path of the ssh private key that will be used to connect to the GitHub"
+  type        = string
+}
+
 variable "git_user_name" {
   description = "User name to the git config"
   type        = string
@@ -44,4 +49,10 @@ variable "git_user_name" {
 variable "git_user_email" {
   description = "User email to the git config"
   type        = string
+}
+
+variable "disk_size_gb" {
+  description = "The boot disk size of the Compute instance"
+  type        = number
+  default     = 50
 }
