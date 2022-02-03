@@ -12,5 +12,5 @@ aws configure list
 ```
 
 # Content
-* [EC2 instances](./ec2/readme.md)
+* [EC2 instances](./ec2/README.md)
 
