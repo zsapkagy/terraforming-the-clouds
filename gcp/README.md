@@ -37,3 +37,4 @@ Usefull tutorials, docs
 * [Getting Started with the Google Provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/getting_started#configuring-the-provider)
 * [GCP with terraform tutorial](https://cloud.google.com/community/tutorials/getting-started-on-gcp-with-terraform)
 * [Protect Sensitive Input Variables](https://learn.hashicorp.com/tutorials/terraform/sensitive-variables)
+* [Install and configure Minikube](https://minikube.sigs.k8s.io/docs/start/)

@@ -1,13 +1,13 @@
 locals {
-  name   = "aws-eks"
+  name = "aws-eks"
 
-#   user_data = <<-EOT
-#   #!/bin/bash
-#   echo "Hello Terraform!"
-#   EOT
+  #   user_data = <<-EOT
+  #   #!/bin/bash
+  #   echo "Hello Terraform!"
+  #   EOT
 
   tags = {
-    Type       = "workplace"
+    Type = "workstation"
     # Environment = "dev"
   }
 }
