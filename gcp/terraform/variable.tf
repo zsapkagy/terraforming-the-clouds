@@ -21,13 +21,19 @@ variable "machine_type" {
   default     = "e2-medium"
 }
 
+variable "disk_size_gb" {
+  description = "The boot disk size of the Compute instance"
+  type        = number
+  default     = 50
+}
+
 variable "instance_name" {
   description = "The name of the instance"
   type        = string
 }
 
 variable "user" {
-  description = "The SSH user"
+  description = "The name of the instance user (the SSH user)"
   type        = string
 }
 
@@ -51,10 +57,4 @@ variable "git_user_email" {
   description = "User email to the git config"
   type        = string
   sensitive   = true
-}
-
-variable "disk_size_gb" {
-  description = "The boot disk size of the Compute instance"
-  type        = number
-  default     = 50
 }
