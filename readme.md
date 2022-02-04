@@ -17,3 +17,4 @@ Usefull tutorials, docs
 ### Etc
 * [Install and configure Minikube](https://minikube.sigs.k8s.io/docs/start/)
 * [Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/about-ssh)
+* [Terraform examples for all the clouds](https://github.com/brokedba/terraform-examples)

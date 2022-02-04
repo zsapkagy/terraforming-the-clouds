@@ -41,3 +41,4 @@ Usefull tutorials, docs
 
 * [Getting Started with the Google Provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/getting_started#configuring-the-provider)
 * [GCP with terraform tutorial](https://cloud.google.com/community/tutorials/getting-started-on-gcp-with-terraform)
+* [Reserving a static external IP address ](https://cloud.google.com/compute/docs/ip-addresses/reserve-static-external-ip-address)
