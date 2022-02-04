@@ -3,6 +3,9 @@ resource "google_service_account" "default" {
   display_name = "Service Account"
 }
 
+resource "google_compute_address" "static-external-ip-address" {
+  name = "static-external-ip-address-${var.instance_name}"
+}
 # resource "google_compute_network" "vpc_network" {
 #   name                    = "terraform-network-for-workstation-instances"
 #   auto_create_subnetworks = "true"
@@ -32,7 +35,8 @@ resource "google_compute_instance" "default" {
     network = "default"
 
     access_config {
-      // Ephemeral public IP
+      // Static public IP
+      nat_ip = google_compute_address.static-external-ip-address.address
     }
   }
 
@@ -41,7 +45,7 @@ resource "google_compute_instance" "default" {
     user-data = data.template_file.instance_startup_script.rendered
   }
 
-  metadata_startup_script = "/etc/skel/init/init.sh"
+  metadata_startup_script = "/home/${var.user}/init/startup.sh"
 
   service_account {
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.

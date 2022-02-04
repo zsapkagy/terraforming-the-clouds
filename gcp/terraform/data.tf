@@ -4,13 +4,15 @@
 
 
 data "template_file" "instance_startup_script" {
-  template = file("${path.module}/init/cloud-init.yaml")
+  template = file("${path.module}/init/cloud-init.yaml.tftpl")
 
   vars = {
-    init_script = templatefile("${path.module}/init/init.sh", {
+    startup = templatefile("${path.module}/init/startup.sh.tftpl", {
+    })
+    init = templatefile("${path.module}/init/init.sh.tftpl", {
       user = var.user
     })
-    user_init_script = templatefile("${path.module}/init/user-init.sh", {
+    user_init = templatefile("${path.module}/init/user-init.sh.tftpl", {
       git_user_name  = var.git_user_name
       git_user_email = var.git_user_email
     })

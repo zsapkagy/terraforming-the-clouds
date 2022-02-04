@@ -44,11 +44,13 @@ variable "ssh_github_privatekey_path" {
 variable "git_user_name" {
   description = "User name to the git config"
   type        = string
+  sensitive   = true
 }
 
 variable "git_user_email" {
   description = "User email to the git config"
   type        = string
+  sensitive   = true
 }
 
 variable "disk_size_gb" {

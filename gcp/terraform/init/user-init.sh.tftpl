@@ -1,14 +1,30 @@
 #!/bin/bash
 
 # init script executed as the final user
+echo "### Start user level initialization script as $USER user"
 
 set -euo pipefail
 
 cd "$HOME"
+
 UPLOADED_GITHUB_SSH_KEY=~/init/github_ssh_key
 GITHUB_SSH_KEY=~/.ssh/github_ssh_key
 
-# GIT
+if ! test -f "$UPLOADED_GITHUB_SSH_KEY";
+then
+  if ! test -f "$GITHUB_SSH_KEY";
+  then
+    echo "The uploaded $UPLOADED_GITHUB_SSH_KEY file does NOT exists. Failure during initialization"
+    exit 1
+  else
+    echo "Initialization completed previously. No further action is needed."
+    exit 0
+  fi
+fi
+
+###############
+# Configure GIT
+###############
 git config --global user.email "${git_user_email}"
 git config --global user.name "${git_user_name}"
 

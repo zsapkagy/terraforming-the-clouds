@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# System startup script executed every instance start
+echo "### Start system Startup Script as the root user"
+
+set -euo pipefail
+
+# minikube start
+# start docker
+systemctl start docker.service

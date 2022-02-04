@@ -1,18 +1,18 @@
 #!/bin/bash
 
 # System init script executed as the root user
+echo "### Start system level initialization script as the root user"
 
 set -euo pipefail
 
-
+##################
+# Configure Docker
+##################
 # Grant default user docker access
 usermod -a -G docker ${user}
-#start docker
-systemctl start docker.service
 
 # Start user level initialization in tmux
-
-echo "### USER::${user}"
+echo "### Run a tmux schell as the ${user} user"
 runuser -u ${user} -- bash -s <<'EOF'
 set -euo pipefail
 cd "$HOME"
