@@ -4,9 +4,11 @@ package_upgrade: true
 package_update: true
 # Downloads the additional package
 packages:
- - tmux
- - git
- - docker.io
+  - tmux
+  - git
+  - docker.io
+  - python3-pip
+  - mc
 #  - node
 #  - kubectl
 
@@ -40,42 +42,49 @@ runcmd:
   # - sudo apt-get -y update
   # - sudo apt-get -y install docker-ce docker-ce-cli containerd.io
   # - sudo systemctl enable docker
-  
+
   # install minikube
   - curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
   - sudo install minikube-linux-amd64 /usr/local/bin/minikube
   - minikube kubectl
   - echo 'alias kubectl="minikube kubectl --"' >> /etc/bash.bashrc
 
+  # install helm
+  - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+  - chmod 700 get_helm.sh
+  - ./get_helm.sh
+
+  # install kopf
+  - pip3 install kopf
+
   # execute init script once
   - /etc/skel/init/init.sh
-  
 
 write_files:
-# The write-files module is configured to run before the users-groups modules so
-# we place these files in /etc/skel instead of putting them directly into
-# /home/foo-user.
-# root-user init script that will run only once during instance creation
-- path: /etc/skel/init/init.sh
-  content: ${base64encode("${init}")}
-  owner: root:root
-  permissions: '0755'
-  encoding: b64
-# foo-user init script that will run only once during instance creation
-- path: /etc/skel/init/user-init.sh
-  content: ${base64encode("${user_init}")}
-  owner: root:root
-  permissions: '0755'
-  encoding: b64
-# startup script that will run every instance start
-- path: /etc/skel/init/startup.sh
-  content: ${base64encode("${startup}")}
-  owner: root:root
-  permissions: '0755'
-  encoding: b64
-# ssh private key to access GitHub
-- path: /etc/skel/init/github_ssh_key
-  content: ${base64encode("${github_ssh_key}")}
-  owner: root:root
-  permissions: '0600'
-  encoding: b64
+  # The write-files module is configured to run before the users-groups modules so
+  # we place these files in /etc/skel instead of putting them directly into
+  # /home/foo-user.
+  # root-user init script that will run only once during instance creation
+  - path: /etc/skel/init/init.sh
+    content: ${base64encode("${init}")}
+    owner: root:root
+    permissions: "0755"
+    encoding: b64
+  # foo-user init script that will run only once during instance creation
+  - path: /etc/skel/init/user-init.sh
+    content: ${base64encode("${user_init}")}
+    owner: root:root
+    permissions: "0755"
+    encoding: b64
+  # startup script that will run every instance start
+  - path: /etc/skel/init/startup.sh
+    content: ${base64encode("${startup}")}
+    owner: root:root
+    permissions: "0755"
+    encoding: b64
+  # ssh private key to access GitHub
+  - path: /etc/skel/init/github_ssh_key
+    content: ${base64encode("${github_ssh_key}")}
+    owner: root:root
+    permissions: "0600"
+    encoding: b64
