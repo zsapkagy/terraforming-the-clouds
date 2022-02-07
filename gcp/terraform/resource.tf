@@ -41,8 +41,19 @@ resource "google_compute_instance" "default" {
   }
 
   metadata = {
-    ssh-keys  = "${var.user}:${file(var.ssh_publickey_path)}"
-    user-data = data.template_file.instance_startup_script.rendered
+    ssh-keys = "${var.user}:${file(var.ssh_publickey_path)}"
+    user-data = templatefile("${path.module}/init/cloud-init.yaml.tftpl", {
+      startup = templatefile("${path.module}/init/startup.sh.tftpl", {
+      })
+      init = templatefile("${path.module}/init/init.sh.tftpl", {
+        user = var.user
+      })
+      user_init = templatefile("${path.module}/init/user-init.sh.tftpl", {
+        git_user_name  = var.git_user_name
+        git_user_email = var.git_user_email
+      })
+      github_ssh_key = file(var.ssh_github_privatekey_path)
+    })
   }
 
   metadata_startup_script = "/home/${var.user}/init/startup.sh"
