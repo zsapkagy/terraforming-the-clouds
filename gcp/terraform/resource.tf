@@ -1,6 +1,6 @@
 resource "google_service_account" "default" {
-  account_id   = "service-account-id"
-  display_name = "Service Account"
+  account_id   = "sa-${var.instance_name}"
+  display_name = "Workstation Service Account"
 }
 
 resource "google_compute_address" "static-external-ip-address" {
@@ -65,6 +65,4 @@ resource "google_compute_instance" "default" {
   }
 
   allow_stopping_for_update = true
-
-  # depends_on = [data.template_file.instance_startup_script]
 }
