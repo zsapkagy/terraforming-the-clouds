@@ -38,13 +38,20 @@ variable "user" {
 }
 
 variable "ssh_publickey_path" {
-  description = "The absolute path of the ssh public key that will be used to connect the instance"
+  description = "The absolute path of the ssh PUBLIC key that will be used to connect the instance"
+  type        = string
+  sensitive   = true
+}
+
+variable "ssh_privatekey_path" {
+  description = "The absolute path of the ssh PRIVATE key only to generate the ssh connect command"
   type        = string
 }
 
 variable "ssh_github_privatekey_path" {
   description = "The absolute path of the ssh private key that will be used to connect to the GitHub"
   type        = string
+  sensitive   = true
 }
 
 variable "git_user_name" {

@@ -15,5 +15,5 @@ output "external_ip" {
 
 output "SSH_Connection" {
   description = "Command to ssh into the instance"
-  value       = format("ssh -i ${var.ssh_publickey_path} ${var.user}@%s", google_compute_instance.default.network_interface.0.access_config.0.nat_ip)
+  value       = format("ssh -i ${var.ssh_privatekey_path} ${var.user}@%s", google_compute_instance.default.network_interface.0.access_config.0.nat_ip)
 }
