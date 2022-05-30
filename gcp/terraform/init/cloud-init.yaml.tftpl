@@ -32,9 +32,11 @@ runcmd:
   # - printf '\nexport NVM_DIR="/opt/nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"\n' >> /etc/bash.bashrc
 
   # install nvm
-  - mkdir -p /opt/nvm
-  - curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | NVM_DIR=/opt/nvm bash
-  - printf '\nexport NVM_DIR="/opt/nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"\n' >> /etc/bash.bashrc
+  # TODO: check nvm because installing this way the nvm won't have permission to the /opt/nvm folder.
+  # nvm install script has been added to the user-init.sh file <-check this
+  # - mkdir -p /opt/nvm
+  # - curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | NVM_DIR=/opt/nvm bash
+  # - printf '\nexport NVM_DIR="/opt/nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"\n' >> /etc/bash.bashrc
 
   # install docker following the guide: https://docs.docker.com/install/linux/docker-ce/ubuntu/
   # - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -45,9 +47,9 @@ runcmd:
 
   # install minikube
   - curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-  - sudo install minikube-linux-amd64 /usr/local/bin/minikube
+  - install minikube-linux-amd64 /usr/local/bin/minikube
   - minikube kubectl
-  - echo 'alias kubectl="minikube kubectl --"' >> /etc/bash.bashrc
+  # - echo 'alias kubectl="minikube kubectl --"' >> /etc/bash.bashrc
 
   # install helm
   - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -57,9 +59,21 @@ runcmd:
   # install kopf
   - pip3 install kopf
 
-   # install docker-compose following the guide: https://docs.docker.com/compose/install/
-  - sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-  - sudo chmod +x /usr/local/bin/docker-compose
+  # install docker-compose following the guide: https://docs.docker.com/compose/install/
+  - curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  - chmod +x /usr/local/bin/docker-compose
+
+  # install go-lang TODO CHECK
+  - curl -OL https://golang.org/dl/go1.17.8.linux-amd64.tar.gz
+  - tar -C /usr/local -xzf go1.17.8.linux-amd64.tar.gz
+  - echo 'export PATH=$PATH:/usr/local/go/bin' >> /etc/bash.bashrc
+
+  # install kubernetes
+  - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  - install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+  - echo 'alias kk="kubectl --"' >> /etc/bash.bashrc # alias for the kubectl command
+  # install k9s
+  - snap isntall k9s
 
   # execute init script once
   - /etc/skel/init/init.sh
