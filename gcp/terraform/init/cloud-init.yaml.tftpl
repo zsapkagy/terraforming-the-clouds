@@ -73,7 +73,8 @@ runcmd:
   - install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
   - echo 'alias kk="kubectl --"' >> /etc/bash.bashrc # alias for the kubectl command
   # install k9s
-  - snap isntall k9s
+  - wget -qO- https://github.com/derailed/k9s/releases/download/v0.25.18/k9s_Linux_x86_64.tar.gz | tar zxvf - -C /tmp/
+  - mv /tmp/k9s /usr/local/bin
 
   # execute init script once
   - /etc/skel/init/init.sh
