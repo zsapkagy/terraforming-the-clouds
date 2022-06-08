@@ -1,5 +1,7 @@
 #cloud-config
 
+# Cloud init script executed as the root user
+
 package_upgrade: true
 package_update: true
 # Downloads the additional package
@@ -9,6 +11,7 @@ packages:
   - docker.io
   - python3-pip
   - mc
+  - terraform
 #  - node
 #  - kubectl
 
@@ -48,8 +51,10 @@ runcmd:
   # install minikube
   - curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
   - install minikube-linux-amd64 /usr/local/bin/minikube
-  - minikube kubectl
+  # - minikube kubectl
   # - echo 'alias kubectl="minikube kubectl --"' >> /etc/bash.bashrc
+  - echo 'alias mi="minikube"' >> /etc/bash.bashrc # alias for the minikube command
+  - echo 'alias mm="minikube"' >> /etc/bash.bashrc # alias for the minikube command
 
   # install helm
   - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -71,10 +76,15 @@ runcmd:
   # install kubernetes
   - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
   - install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-  - echo 'alias kk="kubectl --"' >> /etc/bash.bashrc # alias for the kubectl command
+  - echo 'alias kk="kubectl"' >> /etc/bash.bashrc # alias for the kubectl command
   # install k9s
   - wget -qO- https://github.com/derailed/k9s/releases/download/v0.25.18/k9s_Linux_x86_64.tar.gz | tar zxvf - -C /tmp/
   - mv /tmp/k9s /usr/local/bin
+
+  # install google scaffold
+  - curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+  - sudo install skaffold /usr/local/bin/ 
+  - echo 'alias sk="skaffold"' >> /etc/bash.bashrc # alias for the skaffold command
 
   # execute init script once
   - /etc/skel/init/init.sh
