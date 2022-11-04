@@ -62,7 +62,15 @@ mkdir ~/.ssh/<USER_NAME>
 ssh-keygen -t ed25519 -f ~/.ssh/<USER_NAME>/<USER_NAME>_gci_github_key -C "<USER_NAME>@example.com"
 ```
 
+# Terraform Variables
+
+The available variables can be seen in the `terraform/variable.tf` file. There are some with default values.
+
+All the possible variables could be defined in the a `terraform/terraform.tfvars` file.
+
 # Terraforming
+
+Execute `terraform plan` and or `terraform apply` to check and deploy the terraform plan.
 
 # Links
 
