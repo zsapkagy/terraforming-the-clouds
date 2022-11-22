@@ -1,16 +1,15 @@
 #cloud-config
 
+# Cloud init script executed as the root user
+
 package_upgrade: true
 package_update: true
 # Downloads the additional package
 packages:
   - tmux
   - git
-  - docker.io
   - python3-pip
   - mc
-#  - node
-#  - kubectl
 
 no_ssh_fingerprints: false
 # By default, (most) ssh host keys are printed to the console. Setting
@@ -31,35 +30,59 @@ runcmd:
   # - curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
   # - printf '\nexport NVM_DIR="/opt/nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"\n' >> /etc/bash.bashrc
 
-  # install nvm
-  - mkdir -p /opt/nvm
-  - curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | NVM_DIR=/opt/nvm bash
-  - printf '\nexport NVM_DIR="/opt/nvm"\n[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"\n' >> /etc/bash.bashrc
+  # DOCKER
+  # Install docker following the guide: https://docs.docker.com/install/linux/docker-ce/ubuntu/
+  # Set up the repository
+  - sudo apt-get -y update
+  - sudo mkdir -p /etc/apt/keyrings
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  - echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  # Install Docker Engine
+  - sudo apt-get -y update
+  - sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-compose
 
-  # install docker following the guide: https://docs.docker.com/install/linux/docker-ce/ubuntu/
-  # - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  # - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  # - sudo apt-get -y update
-  # - sudo apt-get -y install docker-ce docker-ce-cli containerd.io
-  # - sudo systemctl enable docker
 
-  # install minikube
+  # Install terraform
+  # - sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
+  # - curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+  # - sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+  # - sudo apt-get update && sudo apt-get install terraform
+  # It seems to be working
+  - sudo snap install terraform --classic
+
+  # Install minikube
   - curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-  - sudo install minikube-linux-amd64 /usr/local/bin/minikube
-  - minikube kubectl
-  - echo 'alias kubectl="minikube kubectl --"' >> /etc/bash.bashrc
+  - install minikube-linux-amd64 /usr/local/bin/minikube
+  # - minikube kubectl
+  # - echo 'alias kubectl="minikube kubectl --"' >> /etc/bash.bashrc
+  - echo 'alias mi="minikube"' >> /etc/bash.bashrc # alias for the minikube command
+  - echo 'alias mm="minikube"' >> /etc/bash.bashrc # alias for the minikube command
 
-  # install helm
+  # Install helm
   - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
   - chmod 700 get_helm.sh
   - ./get_helm.sh
 
-  # install kopf
+  # Install kopf
   - pip3 install kopf
 
-   # install docker-compose following the guide: https://docs.docker.com/compose/install/
-  - sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-  - sudo chmod +x /usr/local/bin/docker-compose
+  # Install go-lang TODO CHECK
+  - curl -OL https://golang.org/dl/go1.17.8.linux-amd64.tar.gz
+  - tar -C /usr/local -xzf go1.17.8.linux-amd64.tar.gz
+  - echo 'export PATH=$PATH:/usr/local/go/bin' >> /etc/bash.bashrc
+
+  # Install kubernetes
+  - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  - install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+  - echo 'alias kk="kubectl"' >> /etc/bash.bashrc # alias for the kubectl command
+  # Install k9s
+  - wget -qO- https://github.com/derailed/k9s/releases/download/v0.25.18/k9s_Linux_x86_64.tar.gz | tar zxvf - -C /tmp/
+  - mv /tmp/k9s /usr/local/bin
+
+  # Install google scaffold
+  - curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+  - sudo install skaffold /usr/local/bin/ 
+  - echo 'alias sk="skaffold"' >> /etc/bash.bashrc # alias for the skaffold command
 
   # execute init script once
   - /etc/skel/init/init.sh
