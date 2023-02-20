@@ -50,10 +50,10 @@ resource "google_compute_instance" "default" {
     # network = google_compute_network.vpc_network.self_link
     network = "default"
 
-    access_config {
+    # access_config {
       // Static external public IP - disable this line in case we don't need a static external ip
       # nat_ip = google_compute_address.static-external-ip-address.address
-    }
+    # }
   }
 
   metadata = {
