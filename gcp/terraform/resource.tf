@@ -35,7 +35,7 @@ resource "google_compute_instance" "default" {
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-2204-lts"
+      image = var.disk_image
       size  = var.disk_size_gb
     }
   }
@@ -51,8 +51,8 @@ resource "google_compute_instance" "default" {
     network = "default"
 
     # access_config {
-      // Static external public IP - disable this line in case we don't need a static external ip
-      # nat_ip = google_compute_address.static-external-ip-address.address
+    // Static external public IP - disable this line in case we don't need a static external ip
+    # nat_ip = google_compute_address.static-external-ip-address.address
     # }
   }
 
