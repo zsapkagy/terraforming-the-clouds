@@ -1,4 +1,4 @@
-resource "google_service_account" "default" {
+resource "google_service_account" "service_account" {
   account_id   = "sa-${var.instance_name}"
   display_name = "Workstation Service Account"
 }
@@ -13,14 +13,14 @@ resource "google_project_iam_member" "compute_instance_roles" {
     "roles/container.admin",
   ])
   role    = each.key
-  member  = "serviceAccount:${google_service_account.default.email}"
+  member  = "serviceAccount:${google_service_account.service_account.email}"
   project = var.project_id
 }
 
 // Disable in case we don't need a static external IP
-resource "google_compute_address" "static-external-ip-address" {
-  name = "static-external-ip-address-${var.instance_name}"
-}
+# resource "google_compute_address" "static-external-ip-address" {
+#   name = "static-external-ip-address-${var.instance_name}"
+# }
 
 # resource "google_compute_network" "vpc_network" {
 #   name                    = "terraform-network-for-workstation-instances"
@@ -35,7 +35,7 @@ resource "google_compute_instance" "default" {
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-2004-lts"
+      image = var.disk_image
       size  = var.disk_size_gb
     }
   }
@@ -50,10 +50,10 @@ resource "google_compute_instance" "default" {
     # network = google_compute_network.vpc_network.self_link
     network = "default"
 
-    access_config {
-      // Static external public IP - disable this line in case we don't need a static external ip
-      nat_ip = google_compute_address.static-external-ip-address.address
-    }
+    # access_config {
+    // Static external public IP - disable this line in case we don't need a static external ip
+    # nat_ip = google_compute_address.static-external-ip-address.address
+    # }
   }
 
   metadata = {
@@ -76,7 +76,7 @@ resource "google_compute_instance" "default" {
 
   service_account {
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    email  = google_service_account.default.email
+    email  = google_service_account.service_account.email
     scopes = ["cloud-platform"]
   }
 

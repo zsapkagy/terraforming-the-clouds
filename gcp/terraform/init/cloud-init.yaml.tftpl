@@ -48,6 +48,7 @@ runcmd:
   # - sudo apt-get update && sudo apt-get install terraform
   # It seems to be working
   - sudo snap install terraform --classic
+  - terraform -install-autocomplete
 
   # Install minikube
   - curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
@@ -66,8 +67,8 @@ runcmd:
   - pip3 install kopf
 
   # Install go-lang TODO CHECK
-  - curl -OL https://golang.org/dl/go1.17.8.linux-amd64.tar.gz
-  - tar -C /usr/local -xzf go1.17.8.linux-amd64.tar.gz
+  - curl -OL https://go.dev/dl/go1.21.6.linux-amd64.tar.gz
+  - tar -C /usr/local -xzf go1.21.6.linux-amd64.tar.gz
   - echo 'export PATH=$PATH:/usr/local/go/bin' >> /etc/bash.bashrc
 
   # Install kubernetes
@@ -75,7 +76,7 @@ runcmd:
   - install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
   - echo 'alias kk="kubectl"' >> /etc/bash.bashrc # alias for the kubectl command
   # Install k9s
-  - wget -qO- https://github.com/derailed/k9s/releases/download/v0.25.18/k9s_Linux_x86_64.tar.gz | tar zxvf - -C /tmp/
+  - wget -qO- https://github.com/derailed/k9s/releases/download/v0.31.7/k9s_Linux_amd64.tar.gz | tar zxvf - -C /tmp/
   - mv /tmp/k9s /usr/local/bin
 
   # Install google scaffold

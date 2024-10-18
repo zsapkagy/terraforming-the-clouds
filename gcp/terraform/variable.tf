@@ -21,6 +21,12 @@ variable "machine_type" {
   default     = "e2-standard-2"
 }
 
+variable "disk_image" {
+  description = "The boot disk OS image for the Compute instance"
+  type        = string
+  default     = "ubuntu-os-cloud/ubuntu-2204-lts"
+}
+
 variable "disk_size_gb" {
   description = "The boot disk size of the Compute instance"
   type        = number

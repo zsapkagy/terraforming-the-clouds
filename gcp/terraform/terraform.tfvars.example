@@ -1,6 +1,7 @@
 region                     = "HAS_DEFAULT_COULD_BE_DELETED"
 zone                       = "HAS_DEFAULT_COULD_BE_DELETED"
 machine_type               = "HAS_DEFAULT_COULD_BE_DELETED"
+disk_image                 = "HAS_DEFAULT_COULD_BE_DELETED"
 disk_size_gb               = "HAS_DEFAULT_COULD_BE_DELETED"
 project_id                 = "FILL_ME"
 instance_name              = "FILL_ME-hlf-workstation"
