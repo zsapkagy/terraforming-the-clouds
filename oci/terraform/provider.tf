@@ -1,3 +1,10 @@
+terraform {
+  required_providers {
+    oci = {
+      source = "oracle/oci"
+    }
+  }
+}
 # Configure the OCI provider
 provider "oci" {
   tenancy_ocid     = var.tenancy_ocid

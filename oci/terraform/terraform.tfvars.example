@@ -1,5 +1,0 @@
-tenancy_ocid     = "your_tenancy_ocid"
-user_ocid        = "your_user_ocid"
-fingerprint      = "your_api_key_fingerprint"
-private_key_path = "path/to/your/private_key.pem"
-region           = "your_region"
