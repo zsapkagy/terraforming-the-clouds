@@ -24,6 +24,11 @@ You have 2 options to configure the OCI CLI:
 
 Either way, you need to create RSA keys. But this could be done during the OCI CLI setup or before.
 
+#### Create a user
+
+Create a user in the OCI console in the compartment where you want to create the resources
+(Do NOT use the root compartment and the root user for security reasons!)
+
 #### Create RSA keys
 
 See [OCI Set Up OCI-Terraform](https://docs.oracle.com/en-us/iaas/developer-tutorials/tutorials/tf-provider/01-summary.htm)
@@ -31,7 +36,7 @@ See [OCI Set Up OCI-Terraform](https://docs.oracle.com/en-us/iaas/developer-tuto
 You create RSA keys for API signing in to your Oracle Cloud Infrastructure account.
 
 - Generate a PEM file locally
-- Upload the PEM file to the OCI console as an API signing key
+- Upload the PEM file to the OCI console as an API signing key for the previously created user
 - Use the path of the PEM file in the `terraform.tfvars` file as the `private_key_path`
 
 ### Create/Update the `terraform.tfvars` file
@@ -39,6 +44,7 @@ You create RSA keys for API signing in to your Oracle Cloud Infrastructure accou
 - Update the `private_key_path` with the path of the private RSA PEM file
 - Update the `compartment_id` with the OCID of the compartment where you want to create the resources
 - Update the `region` with the region where you want to create the resources
+- Update the `tenancy_ocid`, `user_ocid`, and `fingerprint` with the values from the OCI console
 
 ## Terraform State
 
@@ -47,3 +53,7 @@ You create RSA keys for API signing in to your Oracle Cloud Infrastructure accou
 - The bucket is created automatically when you run `terraform init`
 
 # Links
+
+- [OCI Object Storage Backend for Terraform state](https://docs.oracle.com/en-us/iaas/Content/terraform/object-storage-state.htm#s3)
+- [OCI Naming Convention](https://docs.oracle.com/en/cloud/foundation/cloud_architecture/governance/naming.html#compartments---naming-convention)
+- [Referencing Availability Domains](https://docs.oracle.com/en-us/iaas/Content/terraform/ref-availability-domains.htm)

@@ -72,3 +72,44 @@ variable "state_bucket_name" {
   type        = string
   default     = "terraform-state-bucket"
 }
+
+variable "vcn_name" {
+  description = "Name of the VCN"
+  type        = string
+  default     = "terraform-vcn"
+}
+
+variable "vcn_dns_label" {
+  description = "DNS label for the VCN"
+  type        = string
+  default     = "tfvcn"
+}
+
+variable "vcn_cidrs" {
+  description = "CIDR blocks for the VCN"
+  type        = list(string)
+  default     = ["10.0.0.0/16"]
+}
+
+variable "public_subnet_cidrs" {
+  description = "CIDR blocks for public subnets"
+  type        = list(string)
+  default     = ["10.0.1.0/24"]
+}
+
+variable "public_subnet_names" {
+  description = "Names for public subnets"
+  type        = list(string)
+  default     = ["public-subnet"]
+}
+
+variable "environment" {
+  description = "Environment tag"
+  type        = string
+  default     = "Development"
+}
+
+variable "project_name" {
+  type        = string
+  description = "Project name for resource tagging"
+}

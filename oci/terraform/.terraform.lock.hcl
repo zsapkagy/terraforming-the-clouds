@@ -1,7 +1,7 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/hashicorp/oci" {
+provider "registry.terraform.io/oracle/oci" {
   version = "6.15.0"
   hashes = [
     "h1:MrrjqzgKYrUIy+Vh3ZfUxThlyNveY10/8v+ww5YTRos=",
