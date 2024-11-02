@@ -1,15 +1,13 @@
 terraform {
   required_providers {
     oci = {
-      source = "oracle/oci"
+      source  = "oracle/oci"
+      version = "~> 6.15"
     }
   }
 }
-# Configure the OCI provider
+
+# Configure the OCI provider to use the default CLI config file
 provider "oci" {
-  tenancy_ocid     = var.tenancy_ocid
-  user_ocid        = var.user_ocid
-  fingerprint      = var.fingerprint
-  private_key_path = var.private_key_path
-  region           = var.region
+  config_file_profile = "DEFAULT"
 }

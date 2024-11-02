@@ -1,22 +1,4 @@
-variable "tenancy_ocid" {
-  description = "The OCID of your tenancy"
-  type        = string
-}
-
-variable "user_ocid" {
-  description = "The OCID of the user"
-  type        = string
-}
-
-variable "fingerprint" {
-  description = "The fingerprint of the API key"
-  type        = string
-}
-
-variable "private_key_path" {
-  description = "The path to the private key file"
-  type        = string
-}
+# Provider Variables
 
 variable "region" {
   description = "The OCI region"
@@ -28,51 +10,43 @@ variable "compartment_id" {
   type        = string
 }
 
-# variable "instance_shape" {
-#   description = "The shape of the instance"
-#   type        = string
-#   default     = "VM.Standard.E2.1.Micro"  // Free tier shape
-# }
-
-# variable "ocpus" {
-#   description = "The number of OCPUs"
-#   type        = number
-#   default     = 0.125  // 1/8 OCPU for free tier
-# }
-
-# variable "memory_in_gbs" {
-#   description = "The amount of memory in GBs"
-#   type        = number
-#   default     = 1  // 1 GB for free tier
-# }
-
-# variable "subnet_id" {
-#   description = "The OCID of the subnet to create the VNIC in"
-#   type        = string
-# }
-
-# variable "image_id" {
-#   description = "The OCID of the image to use for the instance"
-#   type        = string
-# }
-
-# variable "ssh_public_key_path" {
-#   description = "The path to the SSH public key file"
-#   type        = string
-# }
-
-# variable "additional_storage_size_in_gbs" {
-# description = "The size of the additional storage volume in GBs"
-# type = number
-# default = 54 // 54 GB + 46 GB boot volume = 100 GB total for free tier
-# }
-
-variable "state_bucket_name" {
-  description = "Name of the bucket to store Terraform state"
+# Compute Instance Variables
+variable "os_name" {
+  description = "Operating system name"
   type        = string
-  default     = "terraform-state-bucket"
+  default     = "Canonical Ubuntu"
 }
 
+variable "os_version" {
+  description = "Operating system version"
+  type        = string
+  default     = "24.04"
+}
+
+variable "instance_shape" {
+  description = "The shape of the instance"
+  type        = string
+  default     = "VM.Standard.E2.1.Micro"
+}
+
+variable "ocpus" {
+  description = "The number of OCPUs"
+  type        = number
+  default     = 1
+}
+
+variable "memory_in_gbs" {
+  description = "The amount of memory in GBs"
+  type        = number
+  default     = 1
+}
+
+variable "ssh_public_key_path" {
+  description = "The path to the SSH public key file"
+  type        = string
+}
+
+# Network Variables
 variable "vcn_name" {
   description = "Name of the VCN"
   type        = string
@@ -103,13 +77,21 @@ variable "public_subnet_names" {
   default     = ["public-subnet"]
 }
 
+# Storage Variables
+variable "state_bucket_name" {
+  description = "Name of the bucket to store Terraform state"
+  type        = string
+  default     = "terraform-state-bucket"
+}
+
+# Tag Variables
+variable "project_name" {
+  description = "Project name for resource tagging"
+  type        = string
+}
+
 variable "environment" {
   description = "Environment tag"
   type        = string
   default     = "Development"
-}
-
-variable "project_name" {
-  type        = string
-  description = "Project name for resource tagging"
 }
