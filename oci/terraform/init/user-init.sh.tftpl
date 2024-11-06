@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# init script executed as the final user
+echo "### Start user level initialization script as $USER user"
+
+set -euo pipefail
+
+cd "$HOME"
+
+UPLOADED_GITHUB_SSH_KEY=~/init/github_ssh_key
+GITHUB_SSH_KEY=~/.ssh/github_ssh_key
+
+if ! test -f "$UPLOADED_GITHUB_SSH_KEY";
+then
+  if ! test -f "$GITHUB_SSH_KEY";
+  then
+    echo "The uploaded $UPLOADED_GITHUB_SSH_KEY file does NOT exists. Failure during initialization"
+    exit 1
+  else
+    echo "Initialization completed previously. No further action is needed."
+    exit 0
+  fi
+fi
+
+###############
+# Configure GIT
+###############
+git config --global user.email "${git_user_email}"
+git config --global user.name "${git_user_name}"
+
+# Relocate the ssh key
+mv $UPLOADED_GITHUB_SSH_KEY ~/.ssh
+# Set the correct permissions to the key file
+chmod 0600 $GITHUB_SSH_KEY
+# Add your SSH private key to the ssh-agent
+eval "$(ssh-agent -s)"
+ssh-add $GITHUB_SSH_KEY
+
+# Create an ssh config file to auto-load the github keys to the ssh-agent
+printf "Host *
+  AddKeysToAgent yes
+  IdentityFile $GITHUB_SSH_KEY
+" >> ~/.ssh/config
+
+echo "try executing 'ssh -T git@github.com' to check github permission"
+
+###############
+# Configure NVM
+###############
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash

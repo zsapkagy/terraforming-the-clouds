@@ -23,6 +23,12 @@ variable "os_version" {
   default     = "24.04"
 }
 
+variable "os_user" {
+  description = "Operating system user (ubuntu for Ubuntu OS, opc for Oracle)"
+  type        = string
+  default     = "ubuntu" // ubuntu, opc
+}
+
 variable "instance_shape" {
   description = "The shape of the instance"
   type        = string
@@ -94,4 +100,24 @@ variable "environment" {
   description = "Environment tag"
   type        = string
   default     = "Development"
+}
+
+# Github Variables
+
+variable "ssh_github_privatekey_path" {
+  description = "The absolute path of the ssh private key that will be used to connect to the GitHub"
+  type        = string
+  sensitive   = true
+}
+
+variable "git_user_name" {
+  description = "User name to the git config"
+  type        = string
+  sensitive   = true
+}
+
+variable "git_user_email" {
+  description = "User email to the git config"
+  type        = string
+  sensitive   = true
 }

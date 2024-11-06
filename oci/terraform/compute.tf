@@ -31,6 +31,14 @@ resource "oci_core_instance" "free_tier_instance" {
 
   metadata = {
     ssh_authorized_keys = file(var.ssh_public_key_path)
+    user_data           = base64encode(templatefile("${path.module}/init/cloud-init.yaml.tftpl", {
+    user = var.os_user,
+      user_init = templatefile("${path.module}/init/user-init.sh.tftpl", {
+        git_user_name  = var.git_user_name
+        git_user_email = var.git_user_email
+      })
+      github_ssh_key = file(var.ssh_github_privatekey_path)
+    }))
   }
 
   freeform_tags = {
