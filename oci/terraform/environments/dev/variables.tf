@@ -10,48 +10,6 @@ variable "compartment_id" {
   type        = string
 }
 
-# Compute Instance Variables
-variable "os_name" {
-  description = "Operating system name"
-  type        = string
-  default     = "Canonical Ubuntu"
-}
-
-variable "os_version" {
-  description = "Operating system version"
-  type        = string
-  default     = "24.04"
-}
-
-variable "os_user" {
-  description = "Operating system user (ubuntu for Ubuntu OS, opc for Oracle)"
-  type        = string
-  default     = "ubuntu" // ubuntu, opc
-}
-
-variable "instance_shape" {
-  description = "The shape of the instance"
-  type        = string
-  default     = "VM.Standard.E2.1.Micro"
-}
-
-variable "ocpus" {
-  description = "The number of OCPUs"
-  type        = number
-  default     = 1
-}
-
-variable "memory_in_gbs" {
-  description = "The amount of memory in GBs"
-  type        = number
-  default     = 1
-}
-
-variable "ssh_public_key_path" {
-  description = "The path to the SSH public key file"
-  type        = string
-}
-
 # Network Variables
 variable "vcn_name" {
   description = "Name of the VCN"
@@ -102,8 +60,13 @@ variable "environment" {
   default     = "Development"
 }
 
-# Github Variables
+# SSH Variables
+variable "ssh_public_key_path" {
+  description = "The path to the SSH public key file"
+  type        = string
+}
 
+# GitHub Variables
 variable "ssh_github_privatekey_path" {
   description = "The absolute path of the ssh private key that will be used to connect to the GitHub"
   type        = string

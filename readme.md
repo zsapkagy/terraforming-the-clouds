@@ -4,7 +4,7 @@ This repo contains some WorkInProgress code and scripts that could help create r
 
 ## Content
 
-- [AWS](./aws/README.md)
+- [AWS](./aws/README.md) - Out of date
 - [GOOGLE - GCP](./gcp/README.md)
 - [ORACLE - OCI](./oci/README.md)
 

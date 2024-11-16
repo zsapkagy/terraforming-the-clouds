@@ -13,7 +13,7 @@ Look into the `cloud_init` and `user_init` scripts for further information, modi
 
 - Oracle Cloud Infrastructure account
 - Oracle Cloud Infrastructure CLI
-- Terraform CLI
+- Terraform CLI (check supported version)
 
 ## Before you begin
 
@@ -21,6 +21,13 @@ Look into the `cloud_init` and `user_init` scripts for further information, modi
 
 - Be on the right OCI account!
 - DO NOT create instances on a WRONG account!
+- Check what is the supported Terraform version by OCI to prevent nasty problems like (s3 bucket access problem, etc.)
+
+### Use the correct Terraform version
+
+Check the [OCI-Supported Terraform Versions](https://docs.oracle.com/en-us/iaas/Content/ResourceManager/Reference/terraformversions.htm) documentation what is the latest currently supported Terraform version.
+Check the `.terraform-version` and update if required.
+Use `tfenv install` where the `.terraform-version` is to install the correct TF version.
 
 ### Set up OCI CLI
 
@@ -101,3 +108,5 @@ ssh-keygen -t ed25519 -f ~/.ssh/<USER_NAME>/<USER_NAME>_oci_ci_github_key -C "<Y
 - [OCI Naming Convention](https://docs.oracle.com/en/cloud/foundation/cloud_architecture/governance/naming.html#compartments---naming-convention)
 - [Referencing Availability Domains](https://docs.oracle.com/en-us/iaas/Content/terraform/ref-availability-domains.htm)
 - [Always Free Resources](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm)
+- [How to Upgrade Terraform to a Specific Version Using tfenv](https://www.terraformpilot.com/articles/upgrading-terraform-to-a-specific-version/)
+- [Supported Terraform Versions](https://docs.oracle.com/en-us/iaas/Content/ResourceManager/Reference/terraformversions.htm)

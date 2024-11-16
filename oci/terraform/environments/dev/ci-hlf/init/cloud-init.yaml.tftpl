@@ -1,0 +1,54 @@
+#cloud-config
+
+# Cloud init script executed as the root user
+
+package_upgrade: true
+package_update: true
+# Downloads the additional package
+packages:
+  - git
+
+no_ssh_fingerprints: false
+# By default, (most) ssh host keys are printed to the console. Setting
+# emit_keys_to_console to false suppresses this output.
+ssh:
+  emit_keys_to_console: false
+
+# create the docker group
+groups:
+  - docker
+
+runcmd:
+  # DOCKER
+  # Install docker following the guide: https://docs.docker.com/install/linux/docker-ce/ubuntu/
+  # Set up the repository
+  - sudo apt-get -y update
+  - sudo mkdir -p /etc/apt/keyrings
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  - echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  # Install Docker Engine
+  - sudo apt-get -y update
+  - sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-compose
+
+  # INIT
+  # Grant default user docker access
+  - usermod -a -G docker ${user}
+  # Execute user-init script as the user
+  - runuser -u ${user} -- bash /etc/skel/init/user-init.sh
+write_files:
+  # The write-files module is configured to run before the users-groups modules so
+  # we place these files in /etc/skel instead of putting them directly into
+  # /home/foo-user.
+
+  # foo-user init script that will run only once during instance creation
+  - path: /etc/skel/init/user-init.sh
+    content: ${base64encode("${user_init}")}
+    owner: root:root
+    permissions: "0755"
+    encoding: b64
+  # ssh private key to access GitHub
+  - path: /etc/skel/init/github_ssh_key
+    content: ${base64encode("${github_ssh_key}")}
+    owner: root:root
+    permissions: "0600"
+    encoding: b64
