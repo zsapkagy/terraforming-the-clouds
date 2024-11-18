@@ -1,12 +1,30 @@
 # Terraforming the clouds
 
-This repo contains some WorkInProgress code and scripts that could help create resources in the various cloud providers
+This repo contains some WorkInProgress code and scripts that could help create resources in various cloud providers.
 
 ## Content
 
-- [AWS](./aws/README.md) - Out of date
-- [GOOGLE - GCP](./gcp/README.md)
-- [ORACLE - OCI](./oci/README.md)
+### [AWS](./aws/README.md) - Out of date
+
+- **EC2 instance** with
+  - preinstalled tools
+
+### [GOOGLE - GCP](./gcp/README.md)
+
+- **Compute instance** with
+  - preinstalled tools (docker, nvm, helm, kubernetes, scaffold, minikube, Go, etc)
+  - preconfigured ssh to access the instance
+  - preconfigured GitHub access with ssh
+
+### [ORACLE - OCI](./oci/README.md)
+
+- **VCN**
+- Multiple **Compute instance** with
+  - various AlwaysFree shapes
+  - preinstalled tools (docker, nvm, etc)
+  - preconfigured ssh to access the instance
+  - preconfigured GitHub access with ssh
+- Terraform **State stored in OCI S3 Bucket**
 
 ## Links
 

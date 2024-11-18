@@ -60,27 +60,38 @@ variable "environment" {
   default     = "Development"
 }
 
-# SSH Variables
-variable "ssh_public_key_path" {
-  description = "The path to the SSH public key file"
-  type        = string
-}
 
-# GitHub Variables
-variable "ssh_github_privatekey_path" {
-  description = "The absolute path of the ssh private key that will be used to connect to the GitHub"
-  type        = string
-  sensitive   = true
-}
+variable "instances" {
+  # More info about the variables in the /modules/compute_instance/variable.tf file
+  description = "Compute instance configurations. Double check the instance_name variable"
+  type = map(object({
+    instance_name = string
 
-variable "git_user_name" {
-  description = "User name to the git config"
-  type        = string
-  sensitive   = true
-}
+    # OS
+    os_name    = string
+    os_version = string
+    os_user    = string
+    # Shape
+    instance_shape = string
+    ocpus          = number
+    memory_in_gbs  = number
 
-variable "git_user_email" {
-  description = "User email to the git config"
-  type        = string
-  sensitive   = true
+    subnet_id = optional(string)
+    # Tags
+    project_name = optional(number)
+    environment  = optional(number)
+
+    # SSH Variables
+    ssh_public_key_path = string
+
+    # GitHub configurations
+    # The absolute path of the ssh private key that will be used to connect to the GitHub
+    ssh_github_privatekey_path = string
+
+    # User name to the git config
+    git_user_name = string
+
+    # User email to the git config
+    git_user_email = string
+  }))
 }

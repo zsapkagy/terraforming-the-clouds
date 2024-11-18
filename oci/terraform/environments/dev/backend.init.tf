@@ -1,4 +1,5 @@
-# # Use local backend initially only during cration of the backend configuration
+# # Use local backend initially only during cration of the bucket
+# # Put the real backend config from the first TF apply's output in the backend.tf file
 # terraform {
 #   backend "local" {}
 # }
@@ -44,37 +45,3 @@
 # }
 # EOF
 # }
-
-# ##############################
-# # REAL backend configuration
-# # Note: variables are not supported in backend configuration !!!
-# ##############################
-# # terraform {
-# #   backend "s3" {
-# #     bucket = "terraform-state-bucket"
-# #     key    = "terraform.tfstate"
-# #     region = "eu-frankfurt-1"
-# #     endpoints = {
-# #       s3 = "https://frgg6ywgbadz.compat.objectstorage.eu-frankfurt-1.oraclecloud.com"
-# #     }
-# #     # shared_credentials_files    = ["~/.aws/credentials"]
-# #     skip_region_validation      = true
-# #     skip_credentials_validation = true
-# #     skip_requesting_account_id  = true
-# #     use_path_style              = true
-# #     skip_s3_checksum            = true
-# #     skip_metadata_api_check     = true
-# #   }
-# # }
-terraform {
-  backend "s3" {
-    bucket                      = "terraform-state-bucket"
-    key                         = "terraform.tfstate"
-    region                      = "eu-frankfurt-1"
-    skip_region_validation      = true
-    skip_credentials_validation = true
-    skip_metadata_api_check     = true
-    force_path_style            = true
-    endpoint                    = "https://frgg6ywgbadz.compat.objectstorage.eu-frankfurt-1.oraclecloud.com"
-  }
-}

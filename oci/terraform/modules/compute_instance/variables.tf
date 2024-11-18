@@ -50,7 +50,7 @@ variable "memory_in_gbs" {
 }
 
 variable "ssh_public_key_path" {
-  description = "The path to the SSH public key file"
+  description = "The path to the SSH public key file This will be used to access the instance"
   type        = string
 }
 
@@ -62,6 +62,7 @@ variable "subnet_id" {
 variable "user_data" {
   description = "User data for instance initialization"
   type        = string
+  sensitive = true
 }
 
 # Tag Variables
@@ -74,23 +75,4 @@ variable "environment" {
   description = "Environment tag"
   type        = string
   default     = "Development"
-}
-
-# GitHub Variables
-variable "ssh_github_privatekey_path" {
-  description = "The absolute path of the ssh private key that will be used to connect to the GitHub"
-  type        = string
-  sensitive   = true
-}
-
-variable "git_user_name" {
-  description = "User name to the git config"
-  type        = string
-  sensitive   = true
-}
-
-variable "git_user_email" {
-  description = "User email to the git config"
-  type        = string
-  sensitive   = true
 }

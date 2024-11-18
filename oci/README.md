@@ -82,7 +82,7 @@ If you don't already have an `ssh` key to use with this instance create a new on
 - [Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/about-ssh)
 - Set the path of the public key as `tfvar`
 
-```
+```bash
 mkdir ~/.ssh/<USER_NAME>
 ssh-keygen -t ed25519 -f ~/.ssh/<USER_NAME>/<USER_NAME>_oci_ci_github_key -C "<YOUR_EMAIL>@gmail.com"
 ```
@@ -98,10 +98,30 @@ ssh-keygen -t ed25519 -f ~/.ssh/<USER_NAME>/<USER_NAME>_oci_ci_github_key -C "<Y
 
 - Terraform state is stored in a bucket in the OCI console
 - The bucket name is configured in the `terraform.tfvars` file
-- The bucket is created automatically when you run `terraform init`
+- The bucket is created automatically when you run `terraform init` just uncomment the relevant part from the `backend.init.tf` file
+- PUT the backend output in the `backend.tf` file that is gitignored because of the generated content
+
+## OCI Resource Schedule
+
+It could be wise to create an automation to stop your **Compute Instances** daily.
+It could be created with Terraform, but than you need a user with special rights or a root user, because the Schedules could only live in the root compartments (that is the tenancy).
+So probably this time we should pick the easier way and create the Schedules manually on the OCI Console.
+
+### Steps
+
+- Create a ResourceSchedule on the OCI Console
+  - !!! Note that the time of the Schedule is in `UTC`
+- Create a Policy for the schedule to enable it to manipulate compute instances. Something like this.
+
+```bash
+Allow any-user to manage instance in compartment id <compartmentid of the compute instances e.q.: ocid1.compartment.oc1.....> where all{request.principal.type='resourceschedule'}
+```
+
+Look the Links below for further information and possible solutions.
 
 ## Links
 
+- [Welcome to the Cloud Foundation - Oracle Cloud basics](https://docs.oracle.com/en/cloud/foundation/cloud_architecture/governance/index.html#introduction)
 - [Configure the OCI CLI](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliconfigure.htm)
 - [Connecting to a Compute Instance](https://docs.oracle.com/en-us/iaas/Content/Compute/Tasks/connect-to-linux-instance.htm#top)
 - [OCI Object Storage Backend for Terraform state](https://docs.oracle.com/en-us/iaas/Content/terraform/object-storage-state.htm#s3)
@@ -110,3 +130,8 @@ ssh-keygen -t ed25519 -f ~/.ssh/<USER_NAME>/<USER_NAME>_oci_ci_github_key -C "<Y
 - [Always Free Resources](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm)
 - [How to Upgrade Terraform to a Specific Version Using tfenv](https://www.terraformpilot.com/articles/upgrading-terraform-to-a-specific-version/)
 - [Supported Terraform Versions](https://docs.oracle.com/en-us/iaas/Content/ResourceManager/Reference/terraformversions.htm)
+- [OCI - supported values for Compute instance and other resources](https://docs.oracle.com/en-us/iaas/tools/python/2.138.1/api/core/models/oci.core.models.Instance.html?highlight=core%20instance#oci.core.models.Instance.shape)
+- [OCI - Getting Started with Resource Scheduler](https://docs.oracle.com/en-us/iaas/Content/resource-scheduler/tasks/getting-started_resource_scheduler.htm)
+- [OCI - Resource Scheduler Example Policies](https://docs.oracle.com/en-us/iaas/Content/resource-scheduler/references/example_policies.htm)
+- [Terraform to create multiple Resource Schedule in Oracle Cloud](https://karthicin.medium.com/terraform-to-create-multiple-resource-schedule-in-oracle-cloud-03aaba51b909)
+- [Mastering Oracle Cloud Infrastructure with Terraform: A Comprehensive Guide](https://medium.com/@williamwarley/mastering-oracle-cloud-infrastructure-with-terraform-a-comprehensive-guide-2008d7a8a8e2)

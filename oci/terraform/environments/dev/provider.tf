@@ -1,5 +1,5 @@
 terraform {
-  required_version = "1.5.7"
+  required_version = "1.5.7" # latest OCI supported TF version (link in readme to look for latest)
 
   required_providers {
     oci = {
