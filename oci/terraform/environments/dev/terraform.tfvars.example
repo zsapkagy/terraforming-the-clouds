@@ -1,0 +1,39 @@
+compartment_id    = "ocid1.compartment.FILL_ME"
+region            = "FILL_ME"
+state_bucket_name = "terraform-state-bucket"
+
+# ENVIRONMENT_TAGS
+environment  = "Development"
+project_name = "FILL_ME"
+
+# NETWORK
+vcn_name            = "FILL_ME-vcn"
+vcn_dns_label       = "FILL_MEvcn"
+vcn_cidrs           = ["10.0.0.0/16"]
+public_subnet_cidrs = ["10.0.0.0/24"]
+public_subnet_names = ["FILL_ME-public-subnet"]
+
+# COMPUTE_INSTANCES
+instances = {
+  "ci_free_01" = {
+    instance_name = "ci_free_01"
+
+    os_name    = "Canonical Ubuntu"
+    os_user    = "ubuntu" // ubuntu, opc
+    os_version = "24.04"
+
+    # instance_shape = "VM.Standard.A1.Flex" # Free tier shape
+    # ocpus          = 2                     # Maximum for free tier for this shape
+    # memory_in_gbs  = 24                    # Maximum for free tier for this shape
+    instance_shape = "VM.Standard.E2.1.Micro" # Free tier shape
+    ocpus          = 1                        # Maximum for free tier for this shape
+    memory_in_gbs  = 1                        # Maximum for free tier for this shape
+
+    ## SSH
+    ssh_public_key_path        = "~/.ssh/oci/FILL_ME.pub"
+    ssh_github_privatekey_path = "~/.ssh/github/oci-ci/FILL_ME"
+    git_user_name              = "FILL_ME"
+    git_user_email             = "FILL_ME"
+  }
+}
+
