@@ -1,4 +1,4 @@
-# EC2 Instance for Kubernetes in AWS EKS
+# EC2 Instance for Kubernetes in AWS EKS - OUTDATED
 
 This Terraform configuration creates an EC2 instance optimized for working with Kubernetes in AWS EKS.
 

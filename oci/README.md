@@ -1,13 +1,15 @@
 # Compute instance in Oracle Cloud Infrastructure (OCI)
 
-Executing the Terraform you will get an OCI Compute Instance ready t
+Executing the Terraform you will get an OCI Compute Instance that could be used as a remote working station.
 
 ## Features, installed, configured tools
 
+- `ssh` to be able to connect to the instance
 - `Git` (with the given ssh key, and user settings)
 - `nvm`
+- etc.
 
-Look into the `cloud_init` and `user_init` scripts for further information, modification of the tools.
+Look into the `cloud_init` and `user_init` scripts for further information, modification of the preinstalled tools.
 
 ## Prerequisites
 
@@ -45,8 +47,8 @@ See [OCI Set Up OCI-Terraform](https://docs.oracle.com/en-us/iaas/developer-tuto
 
 You create RSA keys to let Terraform signing in to your Oracle Cloud Infrastructure account.
 
-- Generate a PEM file locally
-- Upload the PEM file to the OCI console as an API signing key for the previously created user.
+- Generate a `PEM` file locally
+- Upload the `PEM` file to the OCI console as an API signing key for the previously created user.
 - Use this key during the OCI CLI configuration
 
 #### Create OCI Configuration
@@ -80,7 +82,7 @@ The instance will use this `ssh` key to access the github with it.
 If you don't already have an `ssh` key to use with this instance create a new one
 
 - [Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/about-ssh)
-- Set the path of the public key as `tfvar`
+- We will set the path of the public key as `tfvar`
 
 ```bash
 mkdir ~/.ssh/<USER_NAME>
@@ -98,7 +100,7 @@ ssh-keygen -t ed25519 -f ~/.ssh/<USER_NAME>/<USER_NAME>_oci_ci_github_key -C "<Y
 
 - Terraform state is stored in a bucket in the OCI console
 - The bucket name is configured in the `terraform.tfvars` file
-- The bucket is created automatically when you run `terraform init` just uncomment the relevant part from the `backend.init.tf` file
+- The bucket is created automatically when you run `terraform init` just uncomment the relevant part from the `backend.init.tf` file. This file won't bee needed later so feel free to comment its content out again after the bucket is successfully created and you have the backend configuration.
 - PUT the backend output in the `backend.tf` file that is gitignored because of the generated content
 
 ## OCI Resource Schedule
