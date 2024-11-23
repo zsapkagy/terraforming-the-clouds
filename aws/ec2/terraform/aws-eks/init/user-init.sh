@@ -21,8 +21,9 @@ chmod 0600 id_ed25519*
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
 
-# git config --global user.email "${var.git_user_email}"
-# git config --global user.name "${var.git_user_name}"
-
-git config --global user.email "gyorgy.zsapka@gmail.com"
-git config --global user.name "Gyorgy Zsapka"
+###############
+# Configure GIT
+###############
+# TODO Be able to use variables like in the other cloud solutions
+git config --global user.email "${git_user_email}"
+git config --global user.name "${git_user_name}"

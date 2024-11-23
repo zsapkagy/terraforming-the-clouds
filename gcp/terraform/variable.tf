@@ -39,7 +39,7 @@ variable "instance_name" {
 }
 
 variable "user" {
-  description = "The name of the instance user (the SSH user)"
+  description = "The user of the instance (the SSH user)"
   type        = string
 }
 
