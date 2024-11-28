@@ -24,9 +24,11 @@ module "compute_instance" {
   os_user    = each.value.os_user
 
   ## Instance Configuration
-  instance_shape = each.value.instance_shape
-  ocpus          = each.value.ocpus
-  memory_in_gbs  = each.value.memory_in_gbs
+  instance_shape              = each.value.instance_shape
+  ocpus                       = each.value.ocpus
+  memory_in_gbs               = each.value.memory_in_gbs
+  boot_volume_size            = each.value.boot_volume_size
+  persisted_block_volume_size = each.value.persisted_block_volume_size
 
   ## SSH Key
   ssh_public_key_path = each.value.ssh_public_key_path

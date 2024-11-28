@@ -72,9 +72,11 @@ variable "instances" {
     os_version = string
     os_user    = string
     # Shape
-    instance_shape = string
-    ocpus          = number
-    memory_in_gbs  = number
+    instance_shape              = string
+    ocpus                       = number
+    memory_in_gbs               = number
+    boot_volume_size            = optional(number)
+    persisted_block_volume_size = optional(number)
 
     subnet_id = optional(string)
     # Tags

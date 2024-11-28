@@ -31,6 +31,14 @@ Check the [OCI-Supported Terraform Versions](https://docs.oracle.com/en-us/iaas/
 Check the `.terraform-version` and update if required.
 Use `tfenv install` where the `.terraform-version` is to install the correct TF version.
 
+### Note
+
+- It could be essential to upgrade your OCI plan to Pay-As-You-Go (PAYG) to be able to create the more powerful instances.
+- In PAYG you could still use the free resources BUT do not forget to create a budget and budget alerts to avoid any unexpected charges.
+
+- With the free tier, probably you will not be able to create more powerful instances because of "Out of Capacity" error.
+- Be careful with the free tier limits.
+
 ### Set up OCI CLI
 
 You have 2 options to configure the OCI CLI.

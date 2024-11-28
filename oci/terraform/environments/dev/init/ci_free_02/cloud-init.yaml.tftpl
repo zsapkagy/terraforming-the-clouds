@@ -7,6 +7,7 @@ package_update: true
 # Downloads the additional package
 packages:
   - git
+  - python3-pip
 
 no_ssh_fingerprints: false
 # By default, (most) ssh host keys are printed to the console. Setting
@@ -19,6 +20,17 @@ groups:
   - docker
 
 runcmd:
+  # ######
+  # PERSISTED BLOCK VOLUME
+  - mkdir -p /home/${user}/data
+  - blkid /dev/oracleoci/oraclevdb || mkfs.ext4 /dev/oracleoci/oraclevdb
+  - mount /dev/oracleoci/oraclevdb /home/${user}/data
+  - echo '/dev/oracleoci/oraclevdb /home/${user}/data ext4 defaults,noatime 0 2' >> /etc/fstab
+  - chown ${user}:${user} /home/${user}/data
+  # Resize filesystem if needed
+  - resize2fs /dev/oracleoci/oraclevdb
+
+  # ######
   # DOCKER
   # Install docker following the guide: https://docs.docker.com/install/linux/docker-ce/ubuntu/
   # Set up the repository
@@ -30,11 +42,18 @@ runcmd:
   - sudo apt-get -y update
   - sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-compose
 
+  #  OPTIONAL:Configure Docker to use block volume
+  # - mkdir -p /home/${user}/data/docker
+  # - echo '{\"data-root\": \"/home/${user}/data/docker\"}' | sudo tee /etc/docker/daemon.json
+  # - systemctl restart docker
+
+  # ######
   # INIT
   # Grant default user docker access
   - usermod -a -G docker ${user}
   # Execute user-init script as the user
   - runuser -u ${user} -- bash /etc/skel/init/user-init.sh
+
 write_files:
   # The write-files module is configured to run before the users-groups modules so
   # we place these files in /etc/skel instead of putting them directly into

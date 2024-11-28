@@ -62,7 +62,7 @@ variable "subnet_id" {
 variable "user_data" {
   description = "User data for instance initialization"
   type        = string
-  sensitive = true
+  sensitive   = true
 }
 
 # Tag Variables
@@ -80,5 +80,11 @@ variable "environment" {
 variable "boot_volume_size" {
   description = "The size of the boot volume in GB."
   type        = number
-  default     = 50  # Set a default value of 50GB
+  default     = 50 # Set a default value of 50GB
+}
+
+variable "persisted_block_volume_size" {
+  description = "Size of the persisted block volume in GB. If not provided, no volume will be created."
+  type        = number
+  default     = null
 }

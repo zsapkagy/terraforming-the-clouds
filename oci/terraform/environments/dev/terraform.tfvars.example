@@ -29,6 +29,7 @@ instances = {
     ocpus          = 1                        # Maximum for free tier for this shape
     memory_in_gbs  = 1                        # Maximum for free tier for this shape
     boot_volume_size = 50
+    persisted_block_volume_size = 50
 
     ## SSH
     ssh_public_key_path        = "~/.ssh/oci/FILL_ME.pub"
