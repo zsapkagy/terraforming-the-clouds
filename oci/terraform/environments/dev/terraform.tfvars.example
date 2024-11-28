@@ -28,13 +28,14 @@ instances = {
     instance_shape = "VM.Standard.E2.1.Micro" # Free tier shape
     ocpus          = 1                        # Maximum for free tier for this shape
     memory_in_gbs  = 1                        # Maximum for free tier for this shape
+    boot_volume_size = 50
 
     ## SSH
     ssh_public_key_path        = "~/.ssh/oci/FILL_ME.pub"
     ssh_github_privatekey_path = "~/.ssh/github/oci-ci/FILL_ME"
     git_user_name              = "FILL_ME"
     git_user_email             = "FILL_ME"
-  },
+  }
   "ci_free_02" = {
     instance_name = "ci_free_02"
     # Fill or remove this instance configuration

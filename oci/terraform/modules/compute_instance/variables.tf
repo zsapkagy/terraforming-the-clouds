@@ -76,3 +76,9 @@ variable "environment" {
   type        = string
   default     = "Development"
 }
+
+variable "boot_volume_size" {
+  description = "The size of the boot volume in GB."
+  type        = number
+  default     = 50  # Set a default value of 50GB
+}
