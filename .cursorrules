@@ -61,4 +61,5 @@ Key Conventions
 Documentation and Learning Resources
 
 - Refer to official Terraform documentation for best practices and guidelines: https://registry.terraform.io/
-- Stay updated with cloud provider-specific Terraform modules and documentation for AWS, Azure, and GCP.
+- Use the right documentation version for terraform. Check terraform version in the .terraform-version, .terraform.lock.hcl files or use the latest.
+- Stay updated with cloud provider-specific Terraform modules and documentation for AWS, OCI, Azure, and GCP.
